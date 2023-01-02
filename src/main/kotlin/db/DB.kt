@@ -83,12 +83,42 @@ object DB {
         )
     }
 
-    fun save(resource: String, body: String) {
+    fun save(resource: String, body: Map<String, Any>) {
         connection.prepareStatement("insert into `$resource`(data) values(json(:1))")
             .use {
-                it.setString(1, body)
+                it.setString(1, om.writeValueAsString(body))
                 it.execute()
             }
+    }
+
+    fun authenticate(resource: String, user: String, auth: String): Boolean {
+        connection.prepareStatement("select * from `$resource` where data->>'user' = :1 and data->>'auth' = :2")
+            .use {
+                it.setString(1, user)
+                it.setString(2, auth)
+                it.execute()
+                val rs = it.resultSet
+                if (rs.next()) {
+                    return true
+                }
+            }
+
+        return false
+    }
+
+    fun getRow(resource: String, id: String): Map<String, Any>? {
+        connection.prepareStatement("select * from `${resource}` where id = :1").use {
+            it.setString(1, id)
+            it.execute()
+            val rs = it.resultSet
+            if (rs.next()) {
+                val content = rs.getString("data")
+
+                return om.readValue<Map<String, Any>>(content)
+            }
+        }
+
+        return null
     }
 
     fun delete(resource: String, id: String) {

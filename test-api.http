@@ -1,4 +1,9 @@
 GET http://localhost:8080/api/customers
+Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
+
+###
+GET http://localhost:8080/api/customers/5
+Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
 
 ###
 POST http://localhost:8080/api/customers
@@ -12,8 +17,41 @@ Content-Type: application/json
 ###
 PUT http://localhost:8080/api/customers/5
 Content-Type: application/json
+Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
 
 {
   "name": "arun kumar",
-  "email": "arun@gmail.com"
+  "email": "arun@gmail.com",
+  "address": "Mantri Courtyard, Bangalore"
 }
+
+###
+POST http://localhost:8080/auth/create
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="user"
+
+gowthaman
+--WebAppBoundary--
+Content-Disposition: form-data; name="auth"
+
+password
+--WebAppBoundary--
+
+###
+###
+POST http://localhost:8080/auth/validate
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="user"
+
+gowthaman
+--WebAppBoundary--
+Content-Disposition: form-data; name="auth"
+
+password
+--WebAppBoundary--
+
+###
