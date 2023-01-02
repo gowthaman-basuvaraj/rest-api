@@ -1,0 +1,19 @@
+GET http://localhost:8080/api/customers
+
+###
+POST http://localhost:8080/api/customers
+Content-Type: application/json
+
+{
+  "name": "Arun",
+  "phone": "9611111111"
+}
+
+###
+PUT http://localhost:8080/api/customers/5
+Content-Type: application/json
+
+{
+  "name": "arun kumar",
+  "email": "arun@gmail.com"
+}
