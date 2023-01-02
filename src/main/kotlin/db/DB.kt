@@ -54,11 +54,37 @@ object DB {
 
     }
 
-    fun getRows(resource: String): List<Map<String, Any>> {
+    fun getRows(resource: String, filters: Map<String, Any> = mapOf()): List<Map<String, Any>> {
         val results = arrayListOf<Map<String, Any>>()
 
-        connection.createStatement().use {
-            if (it.execute("select id, data from `$resource`")) {
+
+        val filterSql = arrayListOf<String>()
+        val filterValues = arrayListOf<Any>()
+
+        val baseSql = "select id, data from `$resource`" + if (filters.isNotEmpty()) {
+            filters.forEach { (k, v) ->
+                val pos = filterSql.size + 1
+                filterSql.add("data->>'$k' = :$pos")
+                filterValues.add(v)
+            }
+
+            " where " + filterSql.joinToString(" and ")
+        } else ""
+
+        logger.warn("QueryStr -> $baseSql with Params[$filterValues]")
+
+        connection.prepareStatement(baseSql).use {
+
+            filterValues.forEachIndexed { idx, any ->
+                val index = idx + 1
+                if (any is Number) {
+                    it.setInt(index, any.toInt())
+                } else {
+                    it.setString(index, any.toString())
+                }
+            }
+
+            if (it.execute()) {
                 val resultSet = it.resultSet
                 while (resultSet.next()) {
                     results.add(
@@ -67,6 +93,7 @@ object DB {
                 }
             }
         }
+
         return results
     }
 

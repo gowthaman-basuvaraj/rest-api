@@ -80,8 +80,10 @@ object Api {
                         )
                     }
                     get("") {
+                        val q = it.queryParam("q") ?: "{}"
+                        val params = om.readValue<Map<String, Any>>(q)
                         it.json(
-                            DB.getRows(it.pathParam("resource"))
+                            DB.getRows(it.pathParam("resource"), filters = params)
                         )
                     }
                     post("") {
