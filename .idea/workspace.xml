@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="add a readme">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/httpRequests/http-requests-log.http" afterDir="false" />
+    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="add a readme and cli parser">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/api/Api.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/api/Api.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test-api.http" beforeDir="false" afterPath="$PROJECT_DIR$/test-api.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +17,37 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="rest-api" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="rest-api" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="rest-api" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="shadow" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -61,14 +86,32 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="HTTP Request.test-api | #2">
+  <component name="RunManager" selected="HTTP Request.test-api | #6">
+    <configuration name="rest-api [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="shadowJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="test-api | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="test-api | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="2" requestIdentifier="#2" runType="Run single request">
-      <method v="2" />
-    </configuration>
-    <configuration name="test-api | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="3" requestIdentifier="#3" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="test-api | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="6" requestIdentifier="#6" runType="Run single request">
@@ -94,19 +137,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Gradle.rest-api [shadowJar]" />
       <item itemvalue="HTTP Request.test-api | #1" />
       <item itemvalue="HTTP Request.test-api | #2" />
-      <item itemvalue="HTTP Request.test-api | #3" />
       <item itemvalue="HTTP Request.test-api | #6" />
       <item itemvalue="Kotlin.Api" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.test-api | #6" />
+        <item itemvalue="Gradle.rest-api [shadowJar]" />
         <item itemvalue="HTTP Request.test-api | #2" />
         <item itemvalue="Kotlin.Api" />
         <item itemvalue="HTTP Request.test-api | #1" />
-        <item itemvalue="HTTP Request.test-api | #6" />
-        <item itemvalue="HTTP Request.test-api | #3" />
       </list>
     </recent_temporary>
   </component>
@@ -119,7 +162,7 @@
       <option name="presentableId" value="Default" />
       <updated>1672629557448</updated>
       <workItem from="1672629558508" duration="11912000" />
-      <workItem from="1672706162767" duration="3228000" />
+      <workItem from="1672706162767" duration="4336000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1672636777007</created>
@@ -149,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672641040956</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add a readme and cli parser">
+      <created>1672712347015</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1672712347015</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +210,7 @@
     <MESSAGE value="add more paths and auth" />
     <MESSAGE value="add search/filters" />
     <MESSAGE value="add a readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="add a readme" />
+    <MESSAGE value="add a readme and cli parser" />
+    <option name="LAST_COMMIT_MESSAGE" value="add a readme and cli parser" />
   </component>
 </project>
