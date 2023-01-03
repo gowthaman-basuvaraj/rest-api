@@ -2,7 +2,12 @@ package api
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import db.DB
+import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.parameters.options.default
+import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.options.required
+import com.github.ajalt.clikt.parameters.types.int
+import db.Database
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.http.BadRequestResponse
@@ -18,91 +23,106 @@ object Api {
     private const val DAYS_30 = 30 * 24 * 60 * 60 * 1000L
     private val logger = LoggerFactory.getLogger("Api")
 
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val om = jacksonObjectMapper()
-        val app = Javalin.create { cfg ->
-            cfg.plugins.enableCors { cors ->
-                cors.add {
-                    it.anyHost()
+    class Server : CliktCommand() {
+        private val port: Int by option(help = "port number to run").int().required()
+        private val dbName: String by option().default("app.db")
+        override fun run() {
+            val db = Database(dbName)
+            val om = jacksonObjectMapper()
+            val app = Javalin.create { cfg ->
+                cfg.plugins.enableCors { cors ->
+                    cors.add {
+                        it.anyHost()
+                    }
                 }
+                cfg.jsonMapper(JavalinJackson(om))
             }
-            cfg.jsonMapper(JavalinJackson(om))
-        }
 
-        app.routes {
-            path("/auth") {
-                before {
-                    DB.checkAndCreate("user_authenticate")
-                }
-                post("/create") {
-                    val user = it.formParam("user") ?: throw BadRequestResponse()
-                    val auth = it.formParam("auth") ?: throw BadRequestResponse()
+            app.routes {
+                path("/auth") {
+                    before {
+                        db.checkAndCreate("user_authenticate")
+                    }
+                    post("/create") { ctx ->
+                        val user = ctx.formParam("user") ?: throw BadRequestResponse()
+                        val auth = ctx.formParam("auth") ?: throw BadRequestResponse()
 
-                    DB.save(
-                        "user_authenticate", mapOf(
-                            "user" to user,
-                            "auth" to auth
-                        )
-                    )
-                }
-                post("/validate") {
-                    val user = it.formParam("user") ?: throw BadRequestResponse()
-                    val auth = it.formParam("auth") ?: throw BadRequestResponse()
-                    if (DB.authenticate("user_authenticate", user, auth)) {
+                        val existingUsers = db.getRows("user_authenticate")
+                            .map { it.data }
+                            .filter { it.has("user") }
+                            .map { it.get("user").asText() }
 
-                        it.json(
-                            mapOf(
-                                "authToken" to Jwts.builder().addClaims(
-                                    mapOf(
-                                        "user" to user
-                                    )
-                                ).setExpiration(Date(Date().time + DAYS_30)).compact()
+                        if (existingUsers.contains(user)) throw BadRequestResponse("user already exists")
+
+                        db.save(
+                            "user_authenticate", mapOf(
+                                "user" to user,
+                                "auth" to auth
                             )
                         )
                     }
-                }
-            }
-            path("/api") {
+                    post("/validate") {
+                        val user = it.formParam("user") ?: throw BadRequestResponse()
+                        val auth = it.formParam("auth") ?: throw BadRequestResponse()
+                        if (db.authenticate("user_authenticate", user, auth)) {
 
-                path("/{resource}") {
-                    before {
-                        val at = it.header("Authorization")?.replace("Bearer ", "")?.trim()
-                            ?: throw UnauthorizedResponse("auth token is missing")
-
-                        val cl = Jwts.parser().parse(at).body as Map<String, Any>
-                        logger.warn("access by ${it.method()} ${it.url()} by ${cl["user"]}")
-                        DB.checkAndCreate(it.pathParam("resource"))
-                    }
-                    get("/{id}") {
-                        it.json(
-                            DB.getRow(it.pathParam("resource"), it.pathParam("id")) ?: throw NotFoundResponse()
-                        )
-                    }
-                    get("") {
-                        val q = it.queryParam("q") ?: "{}"
-                        val params = om.readValue<Map<String, Any>>(q)
-                        it.json(
-                            DB.getRows(it.pathParam("resource"), filters = params)
-                        )
-                    }
-                    post("") {
-                        val m = om.readValue<Map<String, Any>>(it.body())
-                        DB.save(it.pathParam("resource"), m)
-                        it.status(HttpStatus.ACCEPTED)
-                    }
-                    delete("/{id}") {
-                        DB.delete(it.pathParam("resource"), it.pathParam("id"))
-                    }
-                    put("/{id}") {
-                        val m = om.readValue<Map<String, Any>>(it.body())
-                        DB.update(it.pathParam("resource"), it.pathParam("id"), m)
+                            it.json(
+                                mapOf(
+                                    "authToken" to Jwts.builder().addClaims(
+                                        mapOf(
+                                            "user" to user
+                                        )
+                                    ).setExpiration(Date(Date().time + DAYS_30)).compact()
+                                )
+                            )
+                        }
                     }
                 }
+                path("/api") {
+
+                    path("/{resource}") {
+                        before {
+                            val at = it.header("Authorization")?.replace("Bearer ", "")?.trim()
+                                ?: throw UnauthorizedResponse("auth token is missing")
+
+                            val cl = Jwts.parser().parse(at).body as Map<*, *>
+                            logger.warn("access by ${it.method()} ${it.url()} by ${cl["user"]}")
+                            db.checkAndCreate(it.pathParam("resource"))
+                        }
+                        get("/{id}") {
+                            it.json(
+                                db.getRow(it.pathParam("resource"), it.pathParam("id")) ?: throw NotFoundResponse()
+                            )
+                        }
+                        get("") {
+                            val q = it.queryParam("q") ?: "{}"
+                            val params = om.readValue<Map<String, Any>>(q)
+                            it.json(
+                                db.getRows(it.pathParam("resource"), filters = params)
+                            )
+                        }
+                        post("") {
+                            val m = om.readValue<Map<String, Any>>(it.body())
+                            db.save(it.pathParam("resource"), m)
+                            it.status(HttpStatus.ACCEPTED)
+                        }
+                        delete("/{id}") {
+                            db.delete(it.pathParam("resource"), it.pathParam("id"))
+                        }
+                        put("/{id}") {
+                            val m = om.readValue<Map<String, Any>>(it.body())
+                            db.update(it.pathParam("resource"), it.pathParam("id"), m)
+                        }
+                    }
+                }
             }
+
+            app.start(port)
+
         }
 
-        app.start()
-
     }
+
+    @JvmStatic
+    fun main(args: Array<String>) = Server().main(args)
 }

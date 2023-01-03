@@ -1,22 +1,20 @@
 package db
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.javalin.json.JavalinJackson
 import org.slf4j.LoggerFactory
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 
-import java.sql.SQLException
-import java.sql.SQLType
 
-
-object DB {
+class Database(private val db: String = "app.db") {
     /*
     What we Do Here?
-    1. Open an Sqlite DB
-    2. when we ask for resource, i.e. a table we check if it exists
+    1. Open a Sqlite DB
+    2. when we ask for resource i.e a table,
+        2.1 check if it exists
         2.1 if no, create it with just 2 cols (id int, data json)
     3. run query
     4. create entry
@@ -24,7 +22,6 @@ object DB {
     6. update entry
     */
 
-    private const val db = "app.db"
     private val om = jacksonObjectMapper()
 
     private val logger = LoggerFactory.getLogger("DB")
@@ -54,22 +51,23 @@ object DB {
 
     }
 
-    fun getRows(resource: String, filters: Map<String, Any> = mapOf()): List<Map<String, Any>> {
-        val results = arrayListOf<Map<String, Any>>()
+    fun getRows(resource: String, filters: Map<String, Any> = mapOf()): List<ResourceResult> {
+        val results = arrayListOf<ResourceResult>()
 
 
         val filterSql = arrayListOf<String>()
         val filterValues = arrayListOf<Any>()
 
-        val baseSql = "select id, data from `$resource`" + if (filters.isNotEmpty()) {
-            filters.forEach { (k, v) ->
-                val pos = filterSql.size + 1
-                filterSql.add("data->>'$k' = :$pos")
-                filterValues.add(v)
+        val whereClause = if (filters.isNotEmpty()) {
+            filters.entries.forEachIndexed { index, entry ->
+                filterSql.add("data->>'${entry.key}' = :${index + 1}")
+                filterValues.add(entry.value)
             }
 
-            " where " + filterSql.joinToString(" and ")
+            "where " + filterSql.joinToString(" and ")
         } else ""
+
+        val baseSql = "select id, data from `$resource` $whereClause".trim()
 
         logger.warn("QueryStr -> $baseSql with Params[$filterValues]")
 
@@ -77,6 +75,7 @@ object DB {
 
             filterValues.forEachIndexed { idx, any ->
                 val index = idx + 1
+                //a very rudimentary check DOES NOT SUPPORT ANY PROPER Filters
                 if (any is Number) {
                     it.setInt(index, any.toInt())
                 } else {
@@ -87,9 +86,7 @@ object DB {
             if (it.execute()) {
                 val resultSet = it.resultSet
                 while (resultSet.next()) {
-                    results.add(
-                        makeResult(resultSet)
-                    )
+                    results.add(makeResult(resultSet))
                 }
             }
         }
@@ -97,16 +94,15 @@ object DB {
         return results
     }
 
-    private fun makeResult(resultSet: ResultSet): Map<String, Any> {
+    private fun makeResult(resultSet: ResultSet): ResourceResult {
 
         val id = resultSet.getInt("id")
         val content = resultSet.getString("data")
 
-        val data = om.readValue<Map<String, Any>>(content)
+        val data = om.readTree(content)
 
-        return mapOf(
-            "id" to id,
-            "data" to data
+        return ResourceResult(
+            id, data
         )
     }
 
@@ -182,5 +178,5 @@ object DB {
         }
     }
 
-    class DBError(msg: String) : Throwable(msg)
+    data class ResourceResult(val id: Int, val data: JsonNode)
 }

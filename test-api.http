@@ -2,7 +2,7 @@ GET http://localhost:8080/api/customers
 Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
 
 ###
-GET http://localhost:8080/api/customers?q={"phone":"9611111111", "email":"a@b.com"}
+GET http://localhost:8080/api/customers?q={"phone":"9611111111"}
 Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
 
 ###

@@ -20,6 +20,9 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
+    implementation("com.github.ajalt:clikt:2.8.0")
+
+
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
 
