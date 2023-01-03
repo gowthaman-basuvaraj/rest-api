@@ -23,6 +23,7 @@ The examples are given in test-api.http (intellij idea http request file)
 * Create user `POST /auth/create`, x-www-form-urlencoded or form-data
 * Authenticate `POST /auth/validate`, x-www-form-urlencoded or form-data
 * get-all of a resource `GET /api/{resource-name}`
+* create a resource `POST /api/{resource-name}`
 * query a resource `GET /api/{resource-name}?q={"key":"value"}`
 * get a resource `GET /api/{resource-name}/{id}`
 * delete resource `DELETE /api/{resource-name}/{id}`
