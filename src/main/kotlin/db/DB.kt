@@ -151,7 +151,7 @@ class Database(private val db: String = "app.db") {
         }
     }
 
-    fun update(resource: String, id: String, m: Map<String, Any>) {
+    fun update(resource: String, id: String, m: Map<String, Any?>) {
         connection.prepareStatement("select data from `${resource}` where id = :1").use { ps1 ->
             ps1.setString(1, id)
             ps1.execute()
@@ -163,8 +163,14 @@ class Database(private val db: String = "app.db") {
                 val data = om.readValue<Map<String, Any>>(content).toMutableMap()
                 logger.warn("DB[$data] UI[$m]")
 
-                data.putAll(m)
-
+                //remove all keys where the values are null, put the rest into data
+                m.entries.forEach { (k, v) ->
+                    if (v == null) {
+                        data.remove(k)
+                    } else {
+                        data.put(k, v)
+                    }
+                }
 
                 logger.warn("DB[$data] UI[$m] Final[$data]")
                 connection.prepareStatement("update '${resource}' set data = json(:1) where id = (:2)")

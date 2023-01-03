@@ -19,18 +19,20 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8080/api/customers/5
+PATCH http://localhost:8080/api/customers/5
 Content-Type: application/json
 Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
 
 {
   "name": "arun kumar",
   "email": "arun@gmail.com",
-  "address": "Mantri Courtyard, Bangalore"
+  "address": "Mantri Courtyard",
+  "city": "Bangalore",
+  "postCode": "560061"
 }
 
 ###
-POST http://localhost:8181/auth/create
+POST http://localhost:8080/auth/create
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary

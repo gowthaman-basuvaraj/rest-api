@@ -109,8 +109,8 @@ object Api {
                         delete("/{id}") {
                             db.delete(it.pathParam("resource"), it.pathParam("id"))
                         }
-                        put("/{id}") {
-                            val m = om.readValue<Map<String, Any>>(it.body())
+                        patch("/{id}") {
+                            val m = om.readValue<Map<String, Any?>>(it.body())
                             db.update(it.pathParam("resource"), it.pathParam("id"), m)
                         }
                     }

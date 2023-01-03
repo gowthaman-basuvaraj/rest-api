@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="add a readme and cli parser">
+    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="add a shadowjar task to build fatjar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/api/Api.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/api/Api.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test-api.http" beforeDir="false" afterPath="$PROJECT_DIR$/test-api.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +89,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="HTTP Request.test-api | #6">
+  <component name="RunManager" selected="HTTP Request.test-api | #3">
     <configuration name="rest-api [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -108,48 +111,32 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="test-api | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" requestIdentifier="#1" runType="Run single request">
+    <configuration name="test-api | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="2" requestIdentifier="#2" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="test-api | #2" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="2" requestIdentifier="#2" runType="Run single request">
+    <configuration name="test-api | #3" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="3" requestIdentifier="#3" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="test-api | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="5" requestIdentifier="#5" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="test-api | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/test-api.http" index="6" requestIdentifier="#6" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="Api" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="api.Api" />
-      <module name="rest-api.main" />
-      <option name="PROGRAM_PARAMETERS" value="--port=8080" />
-      <shortenClasspath name="NONE" />
-      <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
-        <option name="IS_SUBST" value="false" />
-        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
-        <option name="IS_IGNORE_MISSING_FILES" value="false" />
-        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
-        <ENTRIES>
-          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
-        </ENTRIES>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Gradle.rest-api [shadowJar]" />
-      <item itemvalue="HTTP Request.test-api | #1" />
+      <item itemvalue="HTTP Request.test-api | #5" />
       <item itemvalue="HTTP Request.test-api | #2" />
+      <item itemvalue="HTTP Request.test-api | #3" />
       <item itemvalue="HTTP Request.test-api | #6" />
-      <item itemvalue="Kotlin.Api" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="HTTP Request.test-api | #3" />
+        <item itemvalue="HTTP Request.test-api | #5" />
         <item itemvalue="HTTP Request.test-api | #6" />
         <item itemvalue="Gradle.rest-api [shadowJar]" />
         <item itemvalue="HTTP Request.test-api | #2" />
-        <item itemvalue="Kotlin.Api" />
-        <item itemvalue="HTTP Request.test-api | #1" />
       </list>
     </recent_temporary>
   </component>
@@ -162,7 +149,7 @@
       <option name="presentableId" value="Default" />
       <updated>1672629557448</updated>
       <workItem from="1672629558508" duration="11912000" />
-      <workItem from="1672706162767" duration="4336000" />
+      <workItem from="1672706162767" duration="7335000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1672636777007</created>
@@ -199,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672712347015</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add a shadowjar task to build fatjar">
+      <created>1672722470616</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1672722470616</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +205,7 @@
     <MESSAGE value="add search/filters" />
     <MESSAGE value="add a readme" />
     <MESSAGE value="add a readme and cli parser" />
-    <option name="LAST_COMMIT_MESSAGE" value="add a readme and cli parser" />
+    <MESSAGE value="add a shadowjar task to build fatjar" />
+    <option name="LAST_COMMIT_MESSAGE" value="add a shadowjar task to build fatjar" />
   </component>
 </project>
