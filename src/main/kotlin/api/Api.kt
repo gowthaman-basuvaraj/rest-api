@@ -48,9 +48,8 @@ object Api {
                         val auth = ctx.formParam("auth") ?: throw BadRequestResponse()
 
                         val existingUsers = db.getRows("user_authenticate")
-                            .map { it.data }
-                            .filter { it.has("user") }
-                            .map { it.get("user").asText() }
+                            .filter { it.containsKey("user") }
+                            .map { it["user"] as String }
 
                         if (existingUsers.contains(user)) throw BadRequestResponse("user already exists")
 
