@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="use patch instead of put">
+    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="update readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +57,8 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIEW_PUSH_ON_COMMIT_AND_PUSH" value="false" />
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -78,6 +80,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -146,7 +149,9 @@
       <option name="presentableId" value="Default" />
       <updated>1672629557448</updated>
       <workItem from="1672629558508" duration="11912000" />
-      <workItem from="1672706162767" duration="8759000" />
+      <workItem from="1672706162767" duration="11710000" />
+      <workItem from="1673072949626" duration="622000" />
+      <workItem from="1673154251542" duration="222000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1672636777007</created>
@@ -197,7 +202,21 @@
       <option name="project" value="LOCAL" />
       <updated>1672725601190</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update readme">
+      <created>1672727072232</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1672727072232</updated>
+    </task>
+    <task id="LOCAL-00009" summary="update readme">
+      <created>1672727998779</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1672727998779</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,6 +230,7 @@
     <MESSAGE value="add a readme and cli parser" />
     <MESSAGE value="add a shadowjar task to build fatjar" />
     <MESSAGE value="use patch instead of put" />
-    <option name="LAST_COMMIT_MESSAGE" value="use patch instead of put" />
+    <MESSAGE value="update readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="update readme" />
   </component>
 </project>

@@ -172,7 +172,7 @@ class Database(private val db: String = "app.db") {
                     }
                 }
 
-                logger.warn("DB[$data] UI[$m] Final[$data]")
+                logger.warn("Final[$data]")
                 connection.prepareStatement("update '${resource}' set data = json(:1) where id = (:2)")
                     .use { ps2 ->
                         ps2.setString(1, om.writeValueAsString(data))
