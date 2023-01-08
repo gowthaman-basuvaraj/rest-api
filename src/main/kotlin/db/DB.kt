@@ -51,8 +51,8 @@ class Database(private val db: String = "app.db") {
 
     }
 
-    fun getRows(resource: String, filters: Map<String, Any> = mapOf()): List<ResourceResult> {
-        val results = arrayListOf<ResourceResult>()
+    fun getRows(resource: String, filters: Map<String, Any> = mapOf()): List<Map<String, Any>> {
+        val results = arrayListOf<Map<String, Any>>()
 
 
         val filterSql = arrayListOf<String>()
@@ -94,16 +94,15 @@ class Database(private val db: String = "app.db") {
         return results
     }
 
-    private fun makeResult(resultSet: ResultSet): ResourceResult {
+    private fun makeResult(resultSet: ResultSet): Map<String, Any> {
 
         val id = resultSet.getInt("id")
         val content = resultSet.getString("data")
 
-        val data = om.readTree(content)
+        val data = om.readValue<Map<String, Any>>(content).toMutableMap()
+        data["id"] = id
 
-        return ResourceResult(
-            id, data
-        )
+        return data
     }
 
     fun save(resource: String, body: Map<String, Any>) {
@@ -184,5 +183,4 @@ class Database(private val db: String = "app.db") {
         }
     }
 
-    data class ResourceResult(val id: Int, val data: JsonNode)
 }
