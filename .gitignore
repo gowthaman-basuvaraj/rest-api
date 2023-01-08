@@ -5,10 +5,6 @@ build/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
 *.iws
 *.iml
 *.ipr
@@ -42,6 +38,4 @@ bin/
 .DS_Store
 
 *.db
-.idea/dataSources.local.xml
-.idea/dataSources/*
-.idea/httpRequests
+.idea/*
