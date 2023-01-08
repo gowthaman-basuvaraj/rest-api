@@ -60,6 +60,12 @@ object Api {
                                 "auth" to auth
                             )
                         )
+
+                        ctx.json(
+                            mapOf(
+                                "status" to true
+                            )
+                        )
                     }
                     post("/validate") {
                         val user = it.formParam("user") ?: throw BadRequestResponse()

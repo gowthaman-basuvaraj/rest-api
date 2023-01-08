@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="update readme">
+    <list default="true" id="ca78490f-1bff-457b-8abd-0225155245ed" name="Changes" comment="remove log">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/db/DB.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/api/Api.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/api/Api.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +151,8 @@
       <workItem from="1672629558508" duration="11912000" />
       <workItem from="1672706162767" duration="11710000" />
       <workItem from="1673072949626" duration="622000" />
-      <workItem from="1673154251542" duration="222000" />
+      <workItem from="1673154251542" duration="1119000" />
+      <workItem from="1673158401877" duration="138000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1672636777007</created>
@@ -216,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672727998779</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="remove log">
+      <created>1673154485100</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1673154485100</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,6 +239,7 @@
     <MESSAGE value="add a shadowjar task to build fatjar" />
     <MESSAGE value="use patch instead of put" />
     <MESSAGE value="update readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="update readme" />
+    <MESSAGE value="remove log" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove log" />
   </component>
 </project>
