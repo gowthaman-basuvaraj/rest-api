@@ -78,6 +78,8 @@ object Api {
                                     ).setExpiration(Date(Date().time + DAYS_30)).compact()
                                 )
                             )
+                        } else {
+                            throw BadRequestResponse("user does not exist")
                         }
                     }
                 }
