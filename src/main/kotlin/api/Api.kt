@@ -11,6 +11,7 @@ import db.Database
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.http.*
+import io.javalin.http.sse.SseClient
 import io.javalin.json.JavalinJackson
 import io.jsonwebtoken.Jwts
 import org.slf4j.LoggerFactory
@@ -119,6 +120,10 @@ object Api {
                             db.update(it.pathParam("resource"), it.pathParam("id"), m)
                         }
                     }
+
+                }
+                sse("/updates") {
+                    db.addClient(it)
                 }
             }
 

@@ -3,6 +3,7 @@ package db
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.javalin.http.sse.SseClient
 import org.slf4j.LoggerFactory
 import java.sql.Connection
 import java.sql.DriverManager
@@ -23,6 +24,8 @@ class Database(private val db: String = "app.db") {
     */
 
     private val om = jacksonObjectMapper()
+    private val clients = arrayListOf<SseClient>()
+
 
     private val logger = LoggerFactory.getLogger("DB")
     private val connection: Connection by lazy {
@@ -105,14 +108,6 @@ class Database(private val db: String = "app.db") {
         return data
     }
 
-    fun save(resource: String, body: Map<String, Any>) {
-        connection.prepareStatement("insert into `$resource`(data) values(json(:1))")
-            .use {
-                it.setString(1, om.writeValueAsString(body))
-                it.execute()
-            }
-    }
-
     fun authenticate(resource: String, user: String, auth: String): Boolean {
         connection.prepareStatement("select * from `$resource` where data->>'user' = :1 and data->>'auth' = :2")
             .use {
@@ -143,11 +138,24 @@ class Database(private val db: String = "app.db") {
         return null
     }
 
+
+    fun save(resource: String, body: Map<String, Any>) {
+        connection.prepareStatement("insert into `$resource`(data) values(json(:1))")
+            .use {
+                it.setString(1, om.writeValueAsString(body))
+                it.execute()
+            }
+        notifyUI(resource, "save")
+
+    }
+
     fun delete(resource: String, id: String) {
         connection.prepareStatement("delete from `${resource}` where id = :1").use {
             it.setString(1, id)
             it.execute()
         }
+        notifyUI(resource, "delete")
+
     }
 
     fun update(resource: String, id: String, m: Map<String, Any?>) {
@@ -181,6 +189,35 @@ class Database(private val db: String = "app.db") {
             }
 
         }
+        notifyUI(resource, "update")
+    }
+
+    private fun notifyUI(resource: String, action: String) {
+        val data = om.writeValueAsString(
+            mapOf(
+                "id" to resource,
+                "status" to true,
+                "action" to action
+            )
+        )
+        logger.warn("send update $resource => ${clients.size}, data")
+        for (client in clients) {
+            try {
+                logger.warn("send update $resource => $client")
+
+                client.sendEvent("updates", data)
+            } catch (e: Exception) {
+                //ignore
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun addClient(it: SseClient) {
+        logger.warn("Added New Client $it")
+        it.keepAlive()
+        it.sendEvent("welcome", "to update stream")
+        clients.add(it)
     }
 
 }
