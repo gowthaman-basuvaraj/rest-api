@@ -10,10 +10,7 @@ import com.github.ajalt.clikt.parameters.types.int
 import db.Database
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
-import io.javalin.http.BadRequestResponse
-import io.javalin.http.HttpStatus
-import io.javalin.http.NotFoundResponse
-import io.javalin.http.UnauthorizedResponse
+import io.javalin.http.*
 import io.javalin.json.JavalinJackson
 import io.jsonwebtoken.Jwts
 import org.slf4j.LoggerFactory
@@ -87,6 +84,9 @@ object Api {
 
                     path("/{resource}") {
                         before {
+                            //ignore options
+                            if (it.method() == HandlerType.OPTIONS) return@before
+
                             val at = it.header("Authorization")?.replace("Bearer ", "")?.trim()
                                 ?: throw UnauthorizedResponse("auth token is missing")
 

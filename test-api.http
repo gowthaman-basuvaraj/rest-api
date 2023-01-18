@@ -1,17 +1,18 @@
-GET http://localhost:8080/api/customers
-Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
+GET {{url}}/api/customers
+Authorization: {{auth}}
 
 ###
-GET http://localhost:8080/api/customers?q={"phone":"9611111111"}
-Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
+GET {{url}}/api/customers?q={"phone":"9611111111"}
+Authorization: {{auth}}
 
 ###
-GET http://localhost:8080/api/customers/5
-Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
+GET {{url}}/api/customers/5
+Authorization: {{auth}}
 
 ###
-POST http://localhost:8080/api/customers
+POST {{url}}/api/customers
 Content-Type: application/json
+Authorization: {{auth}}
 
 {
   "name": "Arun",
@@ -19,9 +20,9 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://localhost:8080/api/customers/5
+PATCH {{url}}/api/customers/5
 Content-Type: application/json
-Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxMzE0fQ.
+Authorization: {{auth}}
 
 {
   "name": "arun kumar",
@@ -32,7 +33,7 @@ Authorization: eyJhbGciOiJub25lIn0.eyJ1c2VyIjoiZ293dGhhbWFuIiwiZXhwIjoxNjc1MjMxM
 }
 
 ###
-POST http://localhost:8080/auth/create
+POST {{url}}/auth/create
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
@@ -47,7 +48,7 @@ password
 
 ###
 ###
-POST http://localhost:8080/auth/validate
+POST {{url}}/auth/validate
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
