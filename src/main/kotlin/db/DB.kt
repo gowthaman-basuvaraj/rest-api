@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
+import java.util.concurrent.ConcurrentHashMap
 
 
 class Database(private val db: String = "app.db") {
@@ -31,27 +32,31 @@ class Database(private val db: String = "app.db") {
     private val connection: Connection by lazy {
         DriverManager.getConnection("jdbc:sqlite:$db")
     }
+    private val tableCache = ConcurrentHashMap<String, Boolean>()
 
     fun checkAndCreate(resource: String) {
-        connection.createStatement()
-            .use { ps ->
+        tableCache.computeIfAbsent(resource) {
+            connection.createStatement()
+                .use { ps ->
 
-                ps.execute("SELECT count(*) as table_count FROM sqlite_master WHERE type='table' AND name='$resource'")
-                val resultSet = ps.resultSet
-                if (resultSet.next()) {
+                    ps.execute("SELECT count(*) as table_count FROM sqlite_master WHERE type='table' AND name='$resource'")
+                    val resultSet = ps.resultSet
+                    if (resultSet.next()) {
 
-                    val tblCount = resultSet.getInt("table_count")
-                    logger.warn("Check for table $resource => $tblCount")
-                    if (tblCount == 0) {
+                        val tblCount = resultSet.getInt("table_count")
+                        logger.warn("Check for table $resource => $tblCount")
+                        if (tblCount == 0) {
 
-                        connection.createStatement().use {
-                            it.execute("create table `$resource` (id integer primary key autoincrement, data json)")
+                            connection.createStatement().use {
+                                it.execute("create table `$resource` (id integer primary key autoincrement, data json)")
+                            }
                         }
                     }
+
                 }
 
-            }
-
+            true
+        }
     }
 
     fun getRows(resource: String, filters: Map<String, Any> = mapOf()): List<Map<String, Any>> {
